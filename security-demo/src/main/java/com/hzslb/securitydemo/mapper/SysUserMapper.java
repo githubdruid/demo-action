@@ -1,7 +1,12 @@
 package com.hzslb.securitydemo.mapper;
 
+import com.hzslb.securitydemo.mapper.provider.SysUserProvider;
+import com.hzslb.securitydemo.model.SysRole;
 import com.hzslb.securitydemo.model.SysUser;
-import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.SelectProvider;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -9,23 +14,16 @@ import java.util.List;
 @Mapper
 @Repository
 public interface SysUserMapper {
-    @Results({
-            @Result(property = "id", column = "id"),
-            @Result(property = "username", column = "username"),
-            @Result(property = "password", column = "password"),
-            @Result(property = "roles", column = "name",many = @Many(select = "com.hzslb.securitydemo.model.SysRole"))
-    })
-    @Select("SELECT\n" +
-            "\tu.*, r.name\n" +
-            "FROM\n" +
-            "\tsys_user u\n" +
-            "LEFT JOIN sys_role_user sru ON u.id = sru.sys_user_id\n" +
-            "LEFT JOIN sys_role r ON sru.sys_role_id\n" +
-            "WHERE\n" +
-            "\tusername = #{username}")
-    SysUser findByUserName(@Param("username") String username);
-
-
-    @Select("select * from sys_user")
+    @Select("SELECT * FROM sys_user")
     List<SysUser> list();
+
+    @Select("SELECT * FROM sys_user WHERE username=#{username} LIMIT 1")
+    SysUser findByUserName(String username);
+
+    @Select("SELECT sys_role_id FROM sys_role_user WHERE sys_user_id=#{id}")
+    List<Integer> findRolesIdByUserId(Integer id);
+
+//    @Select("SELECT * FROM sys_role WHERE id in (${role_id})")
+    @SelectProvider(type = SysUserProvider.class,method = "findByRole_Id")
+    List<SysRole> findByRoleId(@Param("role_id") List<Integer> role_id);
 }

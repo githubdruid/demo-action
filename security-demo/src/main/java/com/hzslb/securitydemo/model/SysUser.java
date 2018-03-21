@@ -7,9 +7,6 @@ public class SysUser {
     private Integer id;
     private String username;
     private String password;
-
-    private List<SysRole> roles;
-
     public Integer getId() {
         return id;
     }
@@ -33,12 +30,12 @@ public class SysUser {
     public void setPassword(String password) {
         this.password = password;
     }
-
-    public List<SysRole> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(List<SysRole> roles) {
-        this.roles = roles;
+    @Override
+    public String toString() {
+        return "SysUser{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 }
