@@ -7,7 +7,7 @@
     <groupId>com.hzslb</groupId>
     <artifactId>demo-action</artifactId>
     <version>1.0-SNAPSHOT</version>
-
+    <packaging>pom</packaging>
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
@@ -15,15 +15,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <modules>
-        <module></module>
+        <module>security-demo</module>
     </modules>
 
     <properties>
-        <start-class>com.us.Application</start-class>
-        <maven.compiler.target>1.8</maven.compiler.target>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <mybatis.version>3.2.7</mybatis.version>
-        <mybatis-spring.version>1.2.2</mybatis-spring.version>
     </properties>
 
     <dependencyManagement>
