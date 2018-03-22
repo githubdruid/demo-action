@@ -24,8 +24,7 @@ public class CustomUserService implements UserDetailsService {
         if(user==null)
             throw new UsernameNotFoundException("用户名不存在");
         List<SimpleGrantedAuthority> authorities=new ArrayList<>();
-        List<SysRole> roles=service.fingByrole(user.getId());
-        for (SysRole role:roles) {
+        for (SysRole role:user.getRoles()) {
             authorities.add(new SimpleGrantedAuthority(role.getName()));
             System.out.println(role.getName());
         }

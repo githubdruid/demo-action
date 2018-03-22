@@ -24,12 +24,4 @@ public class UserServiceImpl implements UserService {
         return userMapper.findByUserName(username);
     }
 
-    @Override
-    public List<SysRole> fingByrole(Integer id) {
-        List<SysRole> roles=new ArrayList<>();
-        List<Integer> role_id= userMapper.findRolesIdByUserId(id);
-        System.out.println(role_id);
-        roles=userMapper.findByRoleId(role_id);
-        return roles;
-    }
 }
