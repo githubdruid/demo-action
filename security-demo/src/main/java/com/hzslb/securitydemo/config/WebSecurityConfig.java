@@ -1,21 +1,20 @@
 package com.hzslb.securitydemo.config;
 
 import com.hzslb.securitydemo.service.impl.CustomUserService;
-import com.hzslb.securitydemo.util.MD5Util;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.StandardPasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
-public class WebSecurityConfig  extends WebSecurityConfigurerAdapter{
+@EnableGlobalMethodSecurity(securedEnabled = true)// 控制权限注解
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 //        auth.userDetailsService(customUserService());
@@ -63,6 +62,8 @@ public class WebSecurityConfig  extends WebSecurityConfigurerAdapter{
                 .failureUrl("/login?error")
                 .permitAll()//登陆页面用户任意访问
                 .and()
-                .logout().permitAll();//注销行为任意访问
+                .logout().permitAll()//注销行为任意访问
+                .and().httpBasic();//进行http Basic认证
+//                .and().csrf().disable()//关闭csrf
     }
 }
