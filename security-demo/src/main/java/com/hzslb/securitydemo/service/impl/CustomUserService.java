@@ -19,7 +19,7 @@ public class CustomUserService implements UserDetailsService {
     @Autowired
     private UserService service;
     @Override
-    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {//重写loadUserByUsername 方法获得 userdetails 类型用户
         SysUser user=service.find(s);
         if(user==null)
             throw new UsernameNotFoundException("用户名不存在");
